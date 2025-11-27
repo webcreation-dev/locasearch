@@ -1,0 +1,14 @@
+# Exclure la documentation Bootstrap qui cause des erreurs Jekyll
+ekka-admin/assets/scss/bootstrap/site/
+
+# Exclure les fichiers de développement Bootstrap
+**/bootstrap/site/
+**/scss/bootstrap/site/
+
+# Autres fichiers à exclure
+.DS_Store
+*.log
+node_modules/
+.vscode/
+.idea/
+*.backup

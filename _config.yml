@@ -1,0 +1,26 @@
+# Configuration Jekyll pour GitHub Pages
+# Site Ekka Ecommerce PWA
+
+# Désactiver le traitement Jekyll pour les fichiers statiques
+exclude:
+  - ekka-admin/assets/scss/bootstrap/site/
+  - "*.scss"
+  - "*.sass"
+  - node_modules/
+  - vendor/
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+
+# Indiquer que c'est un site statique HTML
+plugins: []
+
+# Markdown
+markdown: kramdown
+
+# Ne pas traiter certains dossiers
+keep_files:
+  - assets
+  - ekka-html
+  - ekka-admin
+  - landing-assets
