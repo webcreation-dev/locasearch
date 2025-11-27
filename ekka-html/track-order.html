@@ -23,6 +23,14 @@
     <link rel="apple-touch-icon" href="assets/images/favicon/favicon.png" />
     <meta name="msapplication-TileImage" content="assets/images/favicon/favicon.png" />
 
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3474d4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Ekka Shop">
+    <link rel="apple-touch-icon" sizes="192x192" href="assets/images/pwa-icons/icon-192x192.png">
+
     <!-- css Icon Font -->
     <link rel="stylesheet" href="assets/css/vendor/ecicons.min.css" />
 
@@ -38,6 +46,9 @@
     <!-- Main Style -->
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/responsive.css" />
+
+    <!-- PWA Custom Styles -->
+    <link rel="stylesheet" href="assets/css/pwa-custom.css" />
 
     <!-- Background css -->
     <link rel="stylesheet" id="bg-switcher-css" href="assets/css/backgrounds/bg-4.css">
@@ -120,6 +131,15 @@
                                 <span class="ec-header-count">4</span>
                             </a>
                             <!-- Header Cart End -->
+                                <!-- PWA Install Button -->
+                                <button id="pwa-install-btn" class="ec-header-btn pwa-install-btn" style="display: none;" title="Installer l'application">
+                                    <div class="header-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M19 9H15V3H9V9H5L12 16L19 9ZM5 18V20H19V18H5Z"/>
+                                        </svg>
+                                    </div>
+                                </button>
+                                <!-- PWA Install Button End -->
                             <!-- Header Cart Start -->
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                                 <div class="header-icon"><img src="assets/images/icons/cart.svg"
@@ -127,6 +147,15 @@
                                 <span class="ec-header-count cart-count-lable">3</span>
                             </a>
                             <!-- Header Cart End -->
+                                <!-- PWA Install Button -->
+                                <button id="pwa-install-btn" class="ec-header-btn pwa-install-btn" style="display: none;" title="Installer l'application">
+                                    <div class="header-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M19 9H15V3H9V9H5L12 16L19 9ZM5 18V20H19V18H5Z"/>
+                                        </svg>
+                                    </div>
+                                </button>
+                                <!-- PWA Install Button End -->
                             <!-- Header menu Start -->
                             <a href="#ec-mobile-menu" class="ec-header-btn ec-side-toggle d-lg-none">
                                 <img src="assets/images/icons/menu.svg" class="svg_img header_svg" alt="icon" />
@@ -195,6 +224,15 @@
                                     <span class="ec-header-count cart-count-lable">3</span>
                                 </a>
                                 <!-- Header Cart End -->
+                                <!-- PWA Install Button -->
+                                <button id="pwa-install-btn" class="ec-header-btn pwa-install-btn" style="display: none;" title="Installer l'application">
+                                    <div class="header-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M19 9H15V3H9V9H5L12 16L19 9ZM5 18V20H19V18H5Z"/>
+                                        </svg>
+                                    </div>
+                                </button>
+                                <!-- PWA Install Button End -->
                             </div>
                         </div>
                     </div>
@@ -1389,6 +1427,10 @@
     <!-- Main Js -->
     <script src="assets/js/vendor/index.js"></script>
     <script src="assets/js/main.js"></script>
+
+    <!-- PWA Scripts -->
+    <script src="assets/js/pwa.js"></script>
+    <script src="assets/js/wishlist-manager.js"></script>
 
 </body>
 </html>

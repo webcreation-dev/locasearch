@@ -1,0 +1,402 @@
+/**
+ * Ekka Shop - PWA Custom Styles
+ * Styles for PWA components (install button, toasts, banners)
+ * Version: 1.0.0
+ */
+
+/* ========================================
+   PWA Install Button
+   ======================================== */
+
+.pwa-install-btn {
+  display: none;
+  position: relative;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 15px;
+  transition: transform 0.2s ease;
+}
+
+.pwa-install-btn:hover {
+  transform: scale(1.1);
+}
+
+.pwa-install-btn .header-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(52, 116, 212, 0.1);
+  transition: background 0.3s ease;
+}
+
+.pwa-install-btn:hover .header-icon {
+  background: rgba(52, 116, 212, 0.2);
+}
+
+.pwa-install-btn svg {
+  fill: #3474d4;
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================================
+   PWA Toast Notifications
+   ======================================== */
+
+.pwa-toast {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pwa-toast.show {
+  bottom: 30px;
+  opacity: 1;
+}
+
+/* ========================================
+   PWA Update Banner
+   ======================================== */
+
+.pwa-update-banner {
+  position: fixed;
+  top: -100px;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  z-index: 9999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: top 0.3s ease;
+}
+
+.pwa-update-banner.show {
+  top: 0;
+}
+
+.pwa-update-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.pwa-update-content span {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pwa-update-btn {
+  background: #fff;
+  color: #667eea;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.pwa-update-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pwa-update-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.pwa-update-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ========================================
+   PWA Safari Banner (iOS)
+   ======================================== */
+
+.pwa-safari-banner {
+  position: fixed;
+  bottom: -400px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 9999;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.2);
+  transition: bottom 0.4s ease;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.pwa-safari-banner.show {
+  bottom: 0;
+}
+
+.pwa-safari-content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.pwa-safari-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.pwa-safari-header span {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.pwa-safari-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.pwa-safari-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.pwa-safari-body {
+  padding: 25px 20px;
+  color: #333;
+}
+
+.pwa-safari-body p {
+  font-size: 15px;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.pwa-safari-body ol {
+  margin: 0;
+  padding-left: 25px;
+}
+
+.pwa-safari-body li {
+  font-size: 14px;
+  margin: 10px 0;
+  line-height: 1.8;
+}
+
+.pwa-safari-body strong {
+  font-weight: 600;
+  color: #667eea;
+}
+
+.pwa-safari-body svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 3px;
+}
+
+/* ========================================
+   Responsive Styles
+   ======================================== */
+
+@media (max-width: 768px) {
+  .pwa-install-btn {
+    margin-left: 10px;
+  }
+
+  .pwa-install-btn .header-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .pwa-install-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .pwa-update-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .pwa-update-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .pwa-toast {
+    bottom: -100px;
+    left: 10px;
+    right: 10px;
+    transform: none;
+    max-width: none;
+  }
+
+  .pwa-toast.show {
+    bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pwa-install-btn {
+    margin-left: 8px;
+  }
+
+  .pwa-install-btn .header-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .pwa-install-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .pwa-update-content {
+    padding: 12px 15px;
+  }
+
+  .pwa-update-content span {
+    font-size: 13px;
+  }
+
+  .pwa-safari-header {
+    padding: 15px;
+  }
+
+  .pwa-safari-header span {
+    font-size: 16px;
+  }
+
+  .pwa-safari-body {
+    padding: 20px 15px;
+  }
+
+  .pwa-safari-body p {
+    font-size: 14px;
+  }
+
+  .pwa-safari-body li {
+    font-size: 13px;
+  }
+}
+
+/* ========================================
+   Dark Mode Support
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .pwa-safari-banner {
+    background: #1a1a1a;
+  }
+
+  .pwa-safari-body {
+    color: #e0e0e0;
+  }
+
+  .pwa-safari-header {
+    border-bottom-color: #333;
+  }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+
+@media print {
+  .pwa-install-btn,
+  .pwa-toast,
+  .pwa-update-banner,
+  .pwa-safari-banner {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+.pwa-install-btn:focus,
+.pwa-update-btn:focus,
+.pwa-update-close:focus,
+.pwa-safari-close:focus {
+  outline: 2px solid #3474d4;
+  outline-offset: 2px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .pwa-install-btn,
+  .pwa-toast,
+  .pwa-update-banner,
+  .pwa-safari-banner,
+  .pwa-update-btn {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .pwa-install-btn .header-icon {
+    border: 2px solid currentColor;
+  }
+
+  .pwa-update-banner {
+    border-bottom: 3px solid #fff;
+  }
+
+  .pwa-safari-banner {
+    border-top: 3px solid #333;
+  }
+}
