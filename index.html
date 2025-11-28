@@ -27,6 +27,14 @@
 	<link rel="stylesheet" href="landing-assets/css/landing-style.css">
 	<!-- Responsive stylesheet -->
 	<link rel="stylesheet" href="landing-assets/css/landing-responsive.css">
+
+	<!-- PWA Manifest -->
+	<link rel="manifest" href="ekka-html/manifest.json">
+	<meta name="theme-color" content="#3474d4">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<meta name="apple-mobile-web-app-title" content="Ekka Shop">
+	<link rel="apple-touch-icon" sizes="192x192" href="ekka-html/assets/images/pwa-icons/icon-192x192.png">
 </head>
 <body class="hero-anime">
 	<div id="ec-overlay"><span class="loader_img"></span></div>
@@ -99,6 +107,9 @@
 						<img class="logo-intro" src="landing-assets/img/logo-color.png" alt="logo-img">
 						<h1>The Best <span class="type">Multi Vendor</span> eCommerce HTML Template.</h1>
 						<a class="btn btn-scroll" href="javascript:void(0)">VIEW DEMO</a>
+						<button id="pwa-install-btn" class="btn btn-install-pwa" style="display: none;">
+							<i class="fas fa-download"></i> INSTALLER L'APP
+						</button>
 						<a class="btn btn-primary btn-buy" href="https://themeforest.net/item/ekka-ecommerce-html-template/34126217">Buy Now</a>
 					</div>
 				</div>
@@ -1783,6 +1794,8 @@
 	<script src="landing-assets/js/typer.js"></script>
 	<script src="landing-assets/js/mixitup.js"></script>
 	<script src="landing-assets/js/landing-script.js"></script>
-	
+
+	<!-- PWA Script -->
+	<script src="ekka-html/assets/js/pwa.js"></script>
 </body>
 </html>
