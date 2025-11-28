@@ -1795,7 +1795,32 @@
 	<script src="landing-assets/js/mixitup.js"></script>
 	<script src="landing-assets/js/landing-script.js"></script>
 
-	<!-- PWA Script -->
-	<script src="ekka-html/assets/js/pwa.js"></script>
+	<!-- PWA Install Button Script (lightweight, no service worker) -->
+	<script>
+	(function() {
+		let deferredPrompt = null;
+		const installBtn = document.getElementById('pwa-install-btn');
+
+		if (installBtn) {
+			window.addEventListener('beforeinstallprompt', (e) => {
+				e.preventDefault();
+				deferredPrompt = e;
+				installBtn.style.display = 'inline-block';
+
+				installBtn.addEventListener('click', () => {
+					if (deferredPrompt) {
+						deferredPrompt.prompt();
+						deferredPrompt.userChoice.then((result) => {
+							if (result.outcome === 'accepted') {
+								installBtn.style.display = 'none';
+							}
+							deferredPrompt = null;
+						});
+					}
+				});
+			});
+		}
+	})();
+	</script>
 </body>
 </html>
