@@ -1,5 +1,5 @@
 /**
- * Ekka Shop - Service Worker
+ * Locapay - Service Worker
  * PWA implementation for offline functionality
  * Version: 1.0.0
  */
@@ -9,7 +9,7 @@ const CACHE_NAMES = {
   static: `ekka-static-${CACHE_VERSION}`,
   pages: `ekka-pages-${CACHE_VERSION}`,
   images: `ekka-images-${CACHE_VERSION}`,
-  fonts: `ekka-fonts-${CACHE_VERSION}`
+  fonts: `ekka-fonts-${CACHE_VERSION}`,
 };
 
 // App Shell - Critical files to pre-cache
@@ -30,19 +30,20 @@ const APP_SHELL = [
   './assets/js/wishlist-manager.js',
   './assets/images/logo/logo.png',
   './assets/images/pwa-icons/icon-192x192.png',
-  './assets/images/pwa-icons/icon-512x512.png'
+  './assets/images/pwa-icons/icon-512x512.png',
 ];
 
 // Maximum number of images to cache (LRU eviction)
 const MAX_IMAGE_CACHE = 200;
 
 // Install event - Pre-cache app shell
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   console.log('[Service Worker] Installing...');
 
   event.waitUntil(
-    caches.open(CACHE_NAMES.static)
-      .then((cache) => {
+    caches
+      .open(CACHE_NAMES.static)
+      .then(cache => {
         console.log('[Service Worker] Pre-caching app shell');
         return cache.addAll(APP_SHELL);
       })
@@ -50,26 +51,27 @@ self.addEventListener('install', (event) => {
         console.log('[Service Worker] App shell cached successfully');
         return self.skipWaiting(); // Activate immediately
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('[Service Worker] Pre-caching failed:', error);
       })
   );
 });
 
 // Activate event - Clean up old caches
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
   console.log('[Service Worker] Activating...');
 
   event.waitUntil(
-    caches.keys()
-      .then((cacheNames) => {
+    caches
+      .keys()
+      .then(cacheNames => {
         return Promise.all(
           cacheNames
-            .filter((cacheName) => {
+            .filter(cacheName => {
               // Delete caches that don't match current version
               return Object.values(CACHE_NAMES).indexOf(cacheName) === -1;
             })
-            .map((cacheName) => {
+            .map(cacheName => {
               console.log('[Service Worker] Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             })
@@ -83,7 +85,7 @@ self.addEventListener('activate', (event) => {
 });
 
 // Fetch event - Handle requests with caching strategies
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
@@ -95,7 +97,10 @@ self.addEventListener('fetch', (event) => {
   // Choose caching strategy based on request type
   if (request.destination === 'image') {
     event.respondWith(handleImageRequest(request));
-  } else if (request.destination === 'document' || request.url.endsWith('.html')) {
+  } else if (
+    request.destination === 'document' ||
+    request.url.endsWith('.html')
+  ) {
     event.respondWith(handlePageRequest(request));
   } else if (request.destination === 'font') {
     event.respondWith(handleFontRequest(request));
@@ -199,7 +204,7 @@ async function handleAssetRequest(request) {
   if (cached) {
     // Return cached version and update in background
     fetch(request)
-      .then((response) => {
+      .then(response => {
         if (response.ok) {
           cache.put(request, response.clone());
         }
@@ -224,49 +229,45 @@ async function handleAssetRequest(request) {
 /**
  * Push notification event handler
  */
-self.addEventListener('push', (event) => {
+self.addEventListener('push', event => {
   console.log('[Service Worker] Push notification received');
 
   const options = {
-    body: event.data ? event.data.text() : 'Nouvelle notification d\'Ekka Shop',
+    body: event.data ? event.data.text() : "Nouvelle notification d'Locapay",
     icon: './assets/images/pwa-icons/icon-192x192.png',
     badge: './assets/images/pwa-icons/icon-96x96.png',
     vibrate: [200, 100, 200],
     data: {
       dateOfArrival: Date.now(),
-      primaryKey: 1
+      primaryKey: 1,
     },
     actions: [
       {
         action: 'view',
         title: 'Voir',
-        icon: './assets/images/pwa-icons/icon-72x72.png'
+        icon: './assets/images/pwa-icons/icon-72x72.png',
       },
       {
         action: 'close',
         title: 'Fermer',
-        icon: './assets/images/pwa-icons/icon-72x72.png'
-      }
-    ]
+        icon: './assets/images/pwa-icons/icon-72x72.png',
+      },
+    ],
   };
 
-  event.waitUntil(
-    self.registration.showNotification('Ekka Shop', options)
-  );
+  event.waitUntil(self.registration.showNotification('Locapay', options));
 });
 
 /**
  * Notification click event handler
  */
-self.addEventListener('notificationclick', (event) => {
+self.addEventListener('notificationclick', event => {
   console.log('[Service Worker] Notification clicked');
 
   event.notification.close();
 
   if (event.action === 'view') {
-    event.waitUntil(
-      clients.openWindow('./')
-    );
+    event.waitUntil(clients.openWindow('./'));
   }
 });
 
@@ -278,10 +279,18 @@ async function checkStorageQuota() {
     const estimate = await navigator.storage.estimate();
     const percentUsed = (estimate.usage / estimate.quota) * 100;
 
-    console.log(`[Service Worker] Storage: ${(estimate.usage / 1024 / 1024).toFixed(2)} MB / ${(estimate.quota / 1024 / 1024).toFixed(2)} MB (${percentUsed.toFixed(1)}%)`);
+    console.log(
+      `[Service Worker] Storage: ${(estimate.usage / 1024 / 1024).toFixed(
+        2
+      )} MB / ${(estimate.quota / 1024 / 1024).toFixed(
+        2
+      )} MB (${percentUsed.toFixed(1)}%)`
+    );
 
     if (percentUsed > 80) {
-      console.warn('[Service Worker] Storage quota above 80%, consider clearing old caches');
+      console.warn(
+        '[Service Worker] Storage quota above 80%, consider clearing old caches'
+      );
     }
   }
 }
@@ -292,15 +301,16 @@ self.addEventListener('activate', () => {
 });
 
 // Message event - Handle messages from clients
-self.addEventListener('message', (event) => {
+self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 
   if (event.data && event.data.type === 'CACHE_URLS') {
     event.waitUntil(
-      caches.open(CACHE_NAMES.pages)
-        .then((cache) => cache.addAll(event.data.urls))
+      caches
+        .open(CACHE_NAMES.pages)
+        .then(cache => cache.addAll(event.data.urls))
     );
   }
 

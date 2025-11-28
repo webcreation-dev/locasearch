@@ -1,10 +1,10 @@
 /**
- * Ekka Shop - PWA Manager
+ * Locapay - PWA Manager
  * Handles service worker registration, installation prompts, and navigation history
  * Version: 1.0.0
  */
 
-(function() {
+(function () {
   'use strict';
 
   // Configuration
@@ -48,8 +48,9 @@
    */
   function registerServiceWorker() {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then((registration) => {
+      navigator.serviceWorker
+        .register('./sw.js')
+        .then(registration => {
           console.log('[PWA] Service Worker registered:', registration.scope);
 
           // Check for updates periodically
@@ -61,13 +62,16 @@
           registration.addEventListener('updatefound', () => {
             const newWorker = registration.installing;
             newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              if (
+                newWorker.state === 'installed' &&
+                navigator.serviceWorker.controller
+              ) {
                 showUpdateNotification();
               }
             });
           });
         })
-        .catch((error) => {
+        .catch(error => {
           console.error('[PWA] Service Worker registration failed:', error);
         });
     });
@@ -108,7 +112,7 @@
     }
 
     // Listen for beforeinstallprompt event
-    window.addEventListener('beforeinstallprompt', (e) => {
+    window.addEventListener('beforeinstallprompt', e => {
       console.log('[PWA] beforeinstallprompt event fired');
 
       // Prevent default browser prompt
@@ -127,7 +131,7 @@
           deferredPrompt.prompt();
 
           // Wait for user choice
-          deferredPrompt.userChoice.then((choiceResult) => {
+          deferredPrompt.userChoice.then(choiceResult => {
             if (choiceResult.outcome === 'accepted') {
               console.log('[PWA] User accepted install');
               localStorage.setItem(STORAGE_KEY_INSTALLED, 'true');
@@ -174,7 +178,7 @@
     const entry = {
       url: currentUrl,
       title: currentTitle,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     // Remove duplicate if exists
@@ -199,7 +203,7 @@
     if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
       navigator.serviceWorker.controller.postMessage({
         type: 'CACHE_URLS',
-        urls: [currentUrl]
+        urls: [currentUrl],
       });
     }
   }
@@ -207,7 +211,7 @@
   /**
    * Get navigation history
    */
-  window.getNavigationHistory = function() {
+  window.getNavigationHistory = function () {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_HISTORY);
       return stored ? JSON.parse(stored) : [];
@@ -244,15 +248,19 @@
     // Handle reload button
     document.getElementById('pwa-reload-btn').addEventListener('click', () => {
       if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
+        navigator.serviceWorker.controller.postMessage({
+          type: 'SKIP_WAITING',
+        });
       }
       window.location.reload();
     });
 
     // Handle close button
-    document.getElementById('pwa-update-close').addEventListener('click', () => {
-      banner.remove();
-    });
+    document
+      .getElementById('pwa-update-close')
+      .addEventListener('click', () => {
+        banner.remove();
+      });
 
     // Auto-show
     setTimeout(() => {
@@ -266,12 +274,12 @@
   function showWelcomeNotification() {
     if ('Notification' in window && Notification.permission === 'granted') {
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then((registration) => {
+        navigator.serviceWorker.ready.then(registration => {
           registration.showNotification('Bienvenue sur Ekka !', {
-            body: 'L\'application est installée et prête à être utilisée hors ligne.',
+            body: "L'application est installée et prête à être utilisée hors ligne.",
             icon: './assets/images/pwa-icons/icon-192x192.png',
             badge: './assets/images/pwa-icons/icon-96x96.png',
-            vibrate: [200, 100, 200]
+            vibrate: [200, 100, 200],
           });
         });
       }
@@ -283,15 +291,21 @@
    */
   function showSafariBanner() {
     // Check if iOS Safari
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     const isStandalone = window.navigator.standalone === true;
 
-    if (isIOS && !isStandalone && !localStorage.getItem('safari-banner-dismissed')) {
+    if (
+      isIOS &&
+      !isStandalone &&
+      !localStorage.getItem('safari-banner-dismissed')
+    ) {
       // Check if banner was shown recently
       const lastShown = localStorage.getItem('safari-banner-last-shown');
       const now = Date.now();
 
-      if (!lastShown || (now - parseInt(lastShown)) > 86400000) { // 24 hours
+      if (!lastShown || now - parseInt(lastShown) > 86400000) {
+        // 24 hours
         setTimeout(() => {
           showSafariInstructions();
         }, 3000); // Show after 3 seconds
@@ -308,7 +322,7 @@
     banner.innerHTML = `
       <div class="pwa-safari-content">
         <div class="pwa-safari-header">
-          <span>Installer Ekka Shop</span>
+          <span>Installer Locapay</span>
           <button class="pwa-safari-close" id="pwa-safari-close">×</button>
         </div>
         <div class="pwa-safari-body">
@@ -325,10 +339,12 @@
     document.body.appendChild(banner);
 
     // Handle close
-    document.getElementById('pwa-safari-close').addEventListener('click', () => {
-      banner.remove();
-      localStorage.setItem('safari-banner-dismissed', 'true');
-    });
+    document
+      .getElementById('pwa-safari-close')
+      .addEventListener('click', () => {
+        banner.remove();
+        localStorage.setItem('safari-banner-dismissed', 'true');
+      });
 
     // Track last shown
     localStorage.setItem('safari-banner-last-shown', Date.now().toString());
@@ -342,7 +358,7 @@
   /**
    * Request notification permission
    */
-  window.requestNotificationPermission = async function() {
+  window.requestNotificationPermission = async function () {
     if (!('Notification' in window)) {
       console.log('[PWA] Notifications not supported');
       return false;
@@ -363,19 +379,19 @@
   /**
    * Show test notification
    */
-  window.showTestNotification = function() {
+  window.showTestNotification = function () {
     if ('Notification' in window && Notification.permission === 'granted') {
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then((registration) => {
+        navigator.serviceWorker.ready.then(registration => {
           registration.showNotification('Test Notification', {
-            body: 'Ceci est une notification de test d\'Ekka Shop.',
+            body: "Ceci est une notification de test d'Locapay.",
             icon: './assets/images/pwa-icons/icon-192x192.png',
             badge: './assets/images/pwa-icons/icon-96x96.png',
             vibrate: [200, 100, 200],
             actions: [
               { action: 'view', title: 'Voir' },
-              { action: 'close', title: 'Fermer' }
-            ]
+              { action: 'close', title: 'Fermer' },
+            ],
           });
         });
       }
@@ -387,7 +403,7 @@
   /**
    * Check storage usage
    */
-  window.checkStorageUsage = async function() {
+  window.checkStorageUsage = async function () {
     if ('storage' in navigator && 'estimate' in navigator.storage) {
       const estimate = await navigator.storage.estimate();
       const percentUsed = (estimate.usage / estimate.quota) * 100;
@@ -400,7 +416,7 @@
       return {
         usage: estimate.usage,
         quota: estimate.quota,
-        percent: percentUsed
+        percent: percentUsed,
       };
     }
 
@@ -413,5 +429,4 @@
   } else {
     init();
   }
-
 })();

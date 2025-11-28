@@ -1,4 +1,4 @@
-# Ekka Shop PWA - Démarrage Rapide
+# Locapay PWA - Démarrage Rapide
 
 ## ✅ Implémentation Terminée
 
@@ -36,6 +36,7 @@ cd ekka-html
 ```
 
 Le script va automatiquement :
+
 - Trouver tous les fichiers .html (sauf index.html et offline.html)
 - Ajouter les meta tags PWA
 - Ajouter le CSS PWA
@@ -70,10 +71,12 @@ Puis ouvrez : **http://localhost:8000**
 1. **Ouvrez Chrome DevTools** (F12)
 
 2. **Application Tab > Manifest**
+
    - ✓ Vérifiez que toutes les propriétés sont chargées
    - ✓ Vérifiez que les 8 icônes s'affichent
 
 3. **Application Tab > Service Workers**
+
    - ✓ Vérifiez que `sw.js` est "activated and running"
    - ✓ Testez offline : cochez "Offline", naviguez sur le site
 
@@ -85,15 +88,18 @@ Puis ouvrez : **http://localhost:8000**
 ### Étape 4 : Test de l'Installation
 
 **Chrome/Edge Desktop :**
+
 - Le bouton download apparaît dans le header (à droite du panier)
 - Cliquez pour installer
 - L'app s'ouvre sans UI navigateur
 
 **Chrome Mobile (Android) :**
+
 - Menu > "Ajouter à l'écran d'accueil"
 - Ou utilisez le bouton dans le header
 
 **Safari iOS :**
+
 - Bouton Partager
 - "Sur l'écran d'accueil"
 - Ajouter
@@ -105,6 +111,7 @@ Puis ouvrez : **http://localhost:8000**
 **Options avec HTTPS Gratuit :**
 
 **Netlify (Le plus simple) :**
+
 ```bash
 npm install -g netlify-cli
 cd ekka-html
@@ -112,6 +119,7 @@ netlify deploy --prod
 ```
 
 **Vercel :**
+
 ```bash
 npm install -g vercel
 cd ekka-html
@@ -119,15 +127,18 @@ vercel --prod
 ```
 
 **GitHub Pages :**
+
 1. Push vers GitHub
 2. Settings > Pages > Enable
 3. Branche : main, Dossier : / (root)
 
 **Cloudflare Pages :**
+
 1. Connectez votre repo GitHub
 2. Publish directory : `ekka-html`
 
 **Serveur Traditionnel :**
+
 ```bash
 # Installer Let's Encrypt SSL
 sudo certbot --nginx -d votredomaine.com
@@ -136,26 +147,31 @@ sudo certbot --nginx -d votredomaine.com
 ## 🎯 Fonctionnalités PWA Disponibles
 
 ### ✅ Mode Hors Ligne
+
 - Toutes les pages visitées restent accessibles
 - Images cachées progressivement
 - Page offline élégante pour pages non visitées
 
 ### ✅ Installation
+
 - Bouton discret dans le header
 - Mode standalone (sans UI navigateur)
 - Icône sur l'écran d'accueil
 
 ### ✅ Wishlist Persistante
+
 - Stockage IndexedDB (ne se perd jamais)
 - Synchronisation automatique du compteur header
 - Fonctionne hors ligne
 - Export JSON possible
 
 ### ✅ Historique de Navigation
+
 - 50 dernières pages trackées
 - Pré-cachées pour accès offline rapide
 
 ### ✅ Notifications Push
+
 - Infrastructure prête
 - Notifications de bienvenue
 - Prêt pour backend futur
@@ -177,7 +193,7 @@ await window.wishlistManager.addToWishlist({
   productName: 'Produit Test',
   productPrice: '$99.99',
   productImage: 'assets/images/product-image/1_1.jpg',
-  productUrl: './product-left-sidebar.html'
+  productUrl: './product-left-sidebar.html',
 });
 
 // Exporter
@@ -197,7 +213,8 @@ await window.wishlistManager.exportWishlist();
 
 ```javascript
 // Console : forcer réenregistrement
-navigator.serviceWorker.getRegistrations()
+navigator.serviceWorker
+  .getRegistrations()
   .then(regs => regs.forEach(reg => reg.unregister()))
   .then(() => location.reload());
 ```
@@ -222,20 +239,25 @@ Pour plus de détails, consultez **PWA-README.md** qui contient :
 ## ✨ Vos Questions Initiales - Réponses
 
 ### "Est-ce que HTML + PWA c'est possible ?"
+
 ✅ **OUI !** Aucun framework nécessaire. Votre template HTML fonctionne parfaitement comme PWA.
 
 ### "Est-ce que je peux mettre un logo ?"
+
 ✅ **OUI !** Déjà fait. Les 8 icônes PWA sont générées depuis votre favicon.
 
 ### "Est-ce que les notifications seront possibles ?"
+
 ✅ **OUI !** Infrastructure de base implémentée. Backend optionnel pour notifications serveur (détails dans PWA-README.md).
 
 ### "Est-ce que je peux forcer l'installation ?"
+
 ✅ **C'EST CORRECT !** Conformément aux standards PWA, l'installation ne peut pas être forcée. Le bouton discret dans le header est la bonne pratique.
 
 ## 🎉 C'est Prêt !
 
-Votre PWA Ekka Shop est maintenant :
+Votre PWA Locapay est maintenant :
+
 - ✅ Installable sur mobile et desktop
 - ✅ Fonctionnelle hors ligne
 - ✅ Avec wishlist persistante
@@ -243,6 +265,7 @@ Votre PWA Ekka Shop est maintenant :
 - ✅ Optimisée pour performance
 
 **Prochaines étapes :**
+
 1. Exécutez `./apply-pwa-to-all.sh`
 2. Testez sur localhost
 3. Déployez avec HTTPS

@@ -1,10 +1,10 @@
 /**
- * Ekka Shop - Wishlist Manager
+ * Locapay - Wishlist Manager
  * IndexedDB-based wishlist with offline persistence
  * Version: 1.0.0
  */
 
-(function($) {
+(function ($) {
   'use strict';
 
   // Configuration
@@ -52,16 +52,22 @@
           resolve();
         };
 
-        request.onupgradeneeded = (event) => {
+        request.onupgradeneeded = event => {
           const db = event.target.result;
 
           // Create object store if it doesn't exist
           if (!db.objectStoreNames.contains(STORE_NAME)) {
-            const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'productId' });
+            const objectStore = db.createObjectStore(STORE_NAME, {
+              keyPath: 'productId',
+            });
 
             // Create indexes
-            objectStore.createIndex('addedDate', 'addedDate', { unique: false });
-            objectStore.createIndex('productName', 'productName', { unique: false });
+            objectStore.createIndex('addedDate', 'addedDate', {
+              unique: false,
+            });
+            objectStore.createIndex('productName', 'productName', {
+              unique: false,
+            });
 
             console.log('[Wishlist] Object store created');
           }
@@ -88,7 +94,7 @@
           productPrice: product.productPrice || '',
           productImage: product.productImage || '',
           productUrl: product.productUrl || window.location.href,
-          addedDate: new Date().toISOString()
+          addedDate: new Date().toISOString(),
         };
 
         const request = objectStore.add(wishlistItem);
@@ -96,7 +102,9 @@
         request.onsuccess = () => {
           console.log('[Wishlist] Product added:', wishlistItem.productName);
           this.syncUIBadge();
-          this.showToast(`${wishlistItem.productName} ajouté à la liste de souhaits`);
+          this.showToast(
+            `${wishlistItem.productName} ajouté à la liste de souhaits`
+          );
           resolve(wishlistItem);
         };
 
@@ -256,7 +264,9 @@
 
       const a = document.createElement('a');
       a.href = url;
-      a.download = `ekka-wishlist-${new Date().toISOString().split('T')[0]}.json`;
+      a.download = `ekka-wishlist-${
+        new Date().toISOString().split('T')[0]
+      }.json`;
       a.click();
 
       URL.revokeObjectURL(url);
@@ -336,7 +346,7 @@
       let hash = 0;
       for (let i = 0; i < str.length; i++) {
         const char = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
+        hash = (hash << 5) - hash + char;
         hash = hash & hash;
       }
       return Math.abs(hash);
@@ -370,7 +380,7 @@
             productPrice: '',
             productImage: '',
             productUrl: '',
-            addedDate: new Date().toISOString()
+            addedDate: new Date().toISOString(),
           };
 
           try {
@@ -412,13 +422,16 @@
   window.wishlistManager = new WishlistManager();
 
   // Initialize on DOM ready
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Initialize wishlist manager
-    window.wishlistManager.init().then(() => {
-      console.log('[Wishlist] Manager initialized');
-    }).catch((error) => {
-      console.error('[Wishlist] Initialization failed:', error);
-    });
+    window.wishlistManager
+      .init()
+      .then(() => {
+        console.log('[Wishlist] Manager initialized');
+      })
+      .catch(error => {
+        console.error('[Wishlist] Initialization failed:', error);
+      });
 
     // Setup event handlers for wishlist buttons
     setupWishlistButtons();
@@ -429,51 +442,84 @@
    */
   function setupWishlistButtons() {
     // Add to wishlist button
-    $(document).on('click', '.ec-btn-group.wishlist, .add-to-wishlist', function(e) {
-      e.preventDefault();
+    $(document).on(
+      'click',
+      '.ec-btn-group.wishlist, .add-to-wishlist',
+      function (e) {
+        e.preventDefault();
 
-      const $button = $(this);
-      const $productCard = $button.closest('.ec-product-inner, .product-item, [data-product-id]');
+        const $button = $(this);
+        const $productCard = $button.closest(
+          '.ec-product-inner, .product-item, [data-product-id]'
+        );
 
-      // Extract product data
-      const product = {
-        productId: $productCard.data('product-id') || $productCard.find('[data-product-id]').data('product-id'),
-        productName: $productCard.find('.ec-pro-title, .product-title').text().trim(),
-        productPrice: $productCard.find('.ec-price, .product-price .new-price').text().trim(),
-        productImage: $productCard.find('.ec-pro-image img, .product-image img').attr('src'),
-        productUrl: $productCard.find('.ec-pro-title a, .product-title a').attr('href') || window.location.href
-      };
+        // Extract product data
+        const product = {
+          productId:
+            $productCard.data('product-id') ||
+            $productCard.find('[data-product-id]').data('product-id'),
+          productName: $productCard
+            .find('.ec-pro-title, .product-title')
+            .text()
+            .trim(),
+          productPrice: $productCard
+            .find('.ec-price, .product-price .new-price')
+            .text()
+            .trim(),
+          productImage: $productCard
+            .find('.ec-pro-image img, .product-image img')
+            .attr('src'),
+          productUrl:
+            $productCard
+              .find('.ec-pro-title a, .product-title a')
+              .attr('href') || window.location.href,
+        };
 
-      // Add to wishlist
-      window.wishlistManager.addToWishlist(product).then(() => {
-        $button.addClass('active');
-      }).catch((error) => {
-        console.error('[Wishlist] Error adding product:', error);
-      });
-    });
+        // Add to wishlist
+        window.wishlistManager
+          .addToWishlist(product)
+          .then(() => {
+            $button.addClass('active');
+          })
+          .catch(error => {
+            console.error('[Wishlist] Error adding product:', error);
+          });
+      }
+    );
 
     // Remove from wishlist button
-    $(document).on('click', '.remove-from-wishlist, .pro-wishlist-delete', function(e) {
-      e.preventDefault();
+    $(document).on(
+      'click',
+      '.remove-from-wishlist, .pro-wishlist-delete',
+      function (e) {
+        e.preventDefault();
 
-      const $button = $(this);
-      const $productCard = $button.closest('.ec-product-inner, .product-item, [data-product-id]');
-      const productId = $productCard.data('product-id') || $productCard.find('[data-product-id]').data('product-id');
+        const $button = $(this);
+        const $productCard = $button.closest(
+          '.ec-product-inner, .product-item, [data-product-id]'
+        );
+        const productId =
+          $productCard.data('product-id') ||
+          $productCard.find('[data-product-id]').data('product-id');
 
-      if (productId) {
-        window.wishlistManager.removeFromWishlist(productId).then(() => {
-          $button.removeClass('active');
-          $productCard.fadeOut(300, function() {
-            $(this).remove();
-          });
-        }).catch((error) => {
-          console.error('[Wishlist] Error removing product:', error);
-        });
+        if (productId) {
+          window.wishlistManager
+            .removeFromWishlist(productId)
+            .then(() => {
+              $button.removeClass('active');
+              $productCard.fadeOut(300, function () {
+                $(this).remove();
+              });
+            })
+            .catch(error => {
+              console.error('[Wishlist] Error removing product:', error);
+            });
+        }
       }
-    });
+    );
 
     // Clear wishlist button
-    $(document).on('click', '.clear-wishlist', function(e) {
+    $(document).on('click', '.clear-wishlist', function (e) {
       e.preventDefault();
 
       if (confirm('Voulez-vous vraiment vider votre liste de souhaits ?')) {
@@ -484,10 +530,9 @@
     });
 
     // Export wishlist button
-    $(document).on('click', '.export-wishlist', function(e) {
+    $(document).on('click', '.export-wishlist', function (e) {
       e.preventDefault();
       window.wishlistManager.exportWishlist();
     });
   }
-
 })(jQuery);

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##############################################
-# Ekka Shop - Apply PWA to All HTML Files
+# Locapay - Apply PWA to All HTML Files
 # This script applies PWA modifications to all 109 HTML files
 ##############################################
 
@@ -48,7 +48,7 @@ for file in $html_files; do
     # Apply modifications using perl (more reliable than sed on macOS)
 
     # 1. Add PWA Manifest tags after msapplication-TileImage
-    perl -i -pe 's|(.*<meta name="msapplication-TileImage".*>)|\1\n\n    <!-- PWA Manifest -->\n    <link rel="manifest" href="manifest.json">\n    <meta name="theme-color" content="#3474d4">\n    <meta name="apple-mobile-web-app-capable" content="yes">\n    <meta name="apple-mobile-web-app-status-bar-style" content="default">\n    <meta name="apple-mobile-web-app-title" content="Ekka Shop">\n    <link rel="apple-touch-icon" sizes="192x192" href="assets/images/pwa-icons/icon-192x192.png">|' "$file"
+    perl -i -pe 's|(.*<meta name="msapplication-TileImage".*>)|\1\n\n    <!-- PWA Manifest -->\n    <link rel="manifest" href="manifest.json">\n    <meta name="theme-color" content="#3474d4">\n    <meta name="apple-mobile-web-app-capable" content="yes">\n    <meta name="apple-mobile-web-app-status-bar-style" content="default">\n    <meta name="apple-mobile-web-app-title" content="Locapay">\n    <link rel="apple-touch-icon" sizes="192x192" href="assets/images/pwa-icons/icon-192x192.png">|' "$file"
 
     # 2. Add PWA CSS after responsive.css
     perl -i -pe 's|(.*<link rel="stylesheet" href="assets/css/responsive\.css".*>)|\1\n\n    <!-- PWA Custom Styles -->\n    <link rel="stylesheet" href="assets/css/pwa-custom.css" />|' "$file"

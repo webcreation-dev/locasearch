@@ -1,34 +1,39 @@
-# Ekka Shop - Documentation PWA
+# Locapay - Documentation PWA
 
 ## Vue d'ensemble
 
-Ekka Shop a été transformé en Progressive Web App (PWA) complète avec fonctionnalités offline, notifications push, et installation sur l'écran d'accueil.
+Locapay a été transformé en Progressive Web App (PWA) complète avec fonctionnalités offline, notifications push, et installation sur l'écran d'accueil.
 
 ## Fonctionnalités PWA Implémentées
 
 ### ✅ 1. Mode Hors Ligne
+
 - **109 pages HTML** disponibles offline via caching progressif
 - Stratégie **Network-First** pour les pages (contenu frais quand connecté)
 - Stratégie **Cache-First** pour les assets (CSS, JS, images)
 - Page offline élégante pour les pages non mises en cache
 
 ### ✅ 2. Installation
+
 - Bouton d'installation discret dans le header (apparaît automatiquement sur Chrome/Edge)
 - Installation détectée automatiquement (bouton masqué une fois installé)
 - Mode standalone (sans UI navigateur)
 - Support Safari iOS avec instructions manuelles
 
 ### ✅ 3. Wishlist Persistante
+
 - **IndexedDB** pour stockage offline robuste
 - Synchronisation automatique avec le compteur du header
 - Migration automatique depuis l'ancien système de cookies
 - Export JSON pour sauvegarde
 
 ### ✅ 4. Historique de Navigation
+
 - 50 dernières pages visitées stockées dans localStorage
 - Pages récentes pré-cachées pour accès offline rapide
 
 ### ✅ 5. Notifications Push
+
 - Infrastructure de base prête (service worker configuré)
 - Notifications de bienvenue après installation
 - Prêt pour intégration backend future (commenté dans le code)
@@ -62,33 +67,46 @@ ekka-html/
 ## Fichiers Modifiés
 
 ### index.html
+
 **Modifications dans `<head>` :**
+
 ```html
 <!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#3474d4">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Ekka Shop">
-<link rel="apple-touch-icon" sizes="192x192" href="assets/images/pwa-icons/icon-192x192.png">
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#3474d4" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Locapay" />
+<link
+  rel="apple-touch-icon"
+  sizes="192x192"
+  href="assets/images/pwa-icons/icon-192x192.png"
+/>
 
 <!-- PWA Custom Styles -->
 <link rel="stylesheet" href="assets/css/pwa-custom.css" />
 ```
 
 **Bouton installation dans header (après cart button) :**
+
 ```html
 <!-- PWA Install Button -->
-<button id="pwa-install-btn" class="ec-header-btn pwa-install-btn" style="display: none;" title="Installer l'application">
-    <div class="header-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19 9H15V3H9V9H5L12 16L19 9ZM5 18V20H19V18H5Z"/>
-        </svg>
-    </div>
+<button
+  id="pwa-install-btn"
+  class="ec-header-btn pwa-install-btn"
+  style="display: none;"
+  title="Installer l'application"
+>
+  <div class="header-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 9H15V3H9V9H5L12 16L19 9ZM5 18V20H19V18H5Z" />
+    </svg>
+  </div>
 </button>
 ```
 
 **Scripts avant `</body>` :**
+
 ```html
 <!-- PWA Scripts -->
 <script src="assets/js/pwa.js"></script>
@@ -102,6 +120,7 @@ ekka-html/
 La PWA nécessite HTTPS (ou localhost). Pour tester localement :
 
 **Option A: Python HTTP Server**
+
 ```bash
 cd ekka-html
 python3 -m http.server 8000
@@ -109,6 +128,7 @@ python3 -m http.server 8000
 ```
 
 **Option B: Node.js http-server**
+
 ```bash
 npm install -g http-server
 cd ekka-html
@@ -117,6 +137,7 @@ http-server -p 8000
 ```
 
 **Option C: PHP Built-in Server**
+
 ```bash
 cd ekka-html
 php -S localhost:8000
@@ -141,15 +162,18 @@ php -S localhost:8000
 ### 4. Test de l'Installation
 
 **Chrome/Edge (Desktop) :**
+
 1. Le bouton d'installation apparaît automatiquement dans le header
 2. Cliquez dessus pour installer
 3. L'app s'ouvre en mode standalone
 
 **Chrome (Mobile Android) :**
+
 1. Menu > "Ajouter à l'écran d'accueil"
 2. Ou le bouton dans le header si disponible
 
 **Safari (iOS) :**
+
 1. Bouton Partager
 2. "Sur l'écran d'accueil"
 3. Ajouter
@@ -157,6 +181,7 @@ php -S localhost:8000
 ### 5. Test de la Wishlist
 
 **Console Chrome :**
+
 ```javascript
 // Vérifier la base de données
 window.wishlistManager.getWishlist().then(console.log);
@@ -169,6 +194,7 @@ window.wishlistManager.exportWishlist();
 ```
 
 **Dans l'interface :**
+
 1. Cliquez sur un bouton "Wishlist" sur un produit
 2. Vérifiez que le compteur header s'incrémente
 3. Fermez et rouvrez le navigateur
@@ -177,6 +203,7 @@ window.wishlistManager.exportWishlist();
 ### 6. Test des Notifications
 
 **Console Chrome :**
+
 ```javascript
 // Demander permission
 await requestNotificationPermission();
@@ -201,6 +228,7 @@ Les PWA **NE FONCTIONNENT PAS** sans HTTPS (sauf localhost).
 ### Options d'Hébergement avec HTTPS Gratuit
 
 #### Option 1 : Netlify (Recommandé)
+
 ```bash
 # Installer Netlify CLI
 npm install -g netlify-cli
@@ -209,9 +237,11 @@ npm install -g netlify-cli
 cd ekka-html
 netlify deploy --prod
 ```
+
 **Avantages :** HTTPS automatique, CDN global, déploiement instantané
 
 #### Option 2 : Vercel
+
 ```bash
 # Installer Vercel CLI
 npm install -g vercel
@@ -222,16 +252,19 @@ vercel --prod
 ```
 
 #### Option 3 : GitHub Pages
+
 1. Push le dossier `ekka-html` vers GitHub
 2. Settings > Pages > Enable
 3. HTTPS automatique sur `https://username.github.io/repo`
 
 #### Option 4 : Cloudflare Pages
+
 1. Connectez votre repo GitHub
 2. Build settings : aucun (HTML statique)
 3. Publish directory : `ekka-html`
 
 #### Option 5 : Hébergement Traditionnel + Let's Encrypt
+
 ```bash
 # Sur serveur Linux avec Certbot
 sudo certbot --nginx -d votredomaine.com
@@ -244,22 +277,26 @@ sudo certbot --nginx -d votredomaine.com
 Modifiez ces fichiers :
 
 **manifest.json :**
+
 ```json
 "start_url": "/",
 "scope": "/"
 ```
 
 **pwa.js :**
+
 ```javascript
-navigator.serviceWorker.register('/sw.js')
+navigator.serviceWorker.register('/sw.js');
 ```
 
 **index.html (et autres HTML) :**
+
 ```html
-<link rel="manifest" href="/manifest.json">
+<link rel="manifest" href="/manifest.json" />
 ```
 
 **sw.js - APP_SHELL :**
+
 ```javascript
 const APP_SHELL = [
   '/',
@@ -278,12 +315,14 @@ Vous avez 2 options :
 **Étape 1 : Ajouter les meta tags PWA dans `<head>`**
 
 Trouvez (dans tous les .html) :
+
 ```
 <link rel="apple-touch-icon" href="assets/images/favicon/favicon.png" />
     <meta name="msapplication-TileImage" content="assets/images/favicon/favicon.png" />
 ```
 
 Remplacez par :
+
 ```
 <link rel="apple-touch-icon" href="assets/images/favicon/favicon.png" />
     <meta name="msapplication-TileImage" content="assets/images/favicon/favicon.png" />
@@ -293,18 +332,20 @@ Remplacez par :
     <meta name="theme-color" content="#3474d4">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Ekka Shop">
+    <meta name="apple-mobile-web-app-title" content="Locapay">
     <link rel="apple-touch-icon" sizes="192x192" href="assets/images/pwa-icons/icon-192x192.png">
 ```
 
 **Étape 2 : Ajouter CSS PWA**
 
 Trouvez (dans tous les .html) :
+
 ```
 <link rel="stylesheet" href="assets/css/responsive.css" />
 ```
 
 Remplacez par :
+
 ```
 <link rel="stylesheet" href="assets/css/responsive.css" />
 
@@ -315,12 +356,14 @@ Remplacez par :
 **Étape 3 : Ajouter bouton installation**
 
 Trouvez :
+
 ```
 <!-- Header Cart End -->
                             </div>
 ```
 
 Remplacez par :
+
 ```
 <!-- Header Cart End -->
                                 <!-- PWA Install Button -->
@@ -338,12 +381,14 @@ Remplacez par :
 **Étape 4 : Ajouter scripts PWA**
 
 Trouvez (avant `</body>`) :
+
 ```
 <script src="assets/js/main.js"></script>
 </body>
 ```
 
 Remplacez par :
+
 ```
 <script src="assets/js/main.js"></script>
 
@@ -367,7 +412,7 @@ const manifestTags = `
     <meta name="theme-color" content="#3474d4">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Ekka Shop">
+    <meta name="apple-mobile-web-app-title" content="Locapay">
     <link rel="apple-touch-icon" sizes="192x192" href="assets/images/pwa-icons/icon-192x192.png">
 `;
 
@@ -411,7 +456,10 @@ glob('ekka-html/**/*.html', (err, files) => {
     let modified = false;
 
     // Add manifest tags
-    if (!content.includes('PWA Manifest') && content.includes('msapplication-TileImage')) {
+    if (
+      !content.includes('PWA Manifest') &&
+      content.includes('msapplication-TileImage')
+    ) {
       content = content.replace(
         /(<meta name="msapplication-TileImage"[^>]*>)/,
         `$1${manifestTags}`
@@ -420,7 +468,10 @@ glob('ekka-html/**/*.html', (err, files) => {
     }
 
     // Add PWA CSS
-    if (!content.includes('pwa-custom.css') && content.includes('responsive.css')) {
+    if (
+      !content.includes('pwa-custom.css') &&
+      content.includes('responsive.css')
+    ) {
       content = content.replace(
         /(<link rel="stylesheet" href="assets\/css\/responsive\.css"[^>]*>)/,
         `$1${pwaCSS}`
@@ -429,7 +480,10 @@ glob('ekka-html/**/*.html', (err, files) => {
     }
 
     // Add install button
-    if (!content.includes('pwa-install-btn') && content.includes('Header Cart End')) {
+    if (
+      !content.includes('pwa-install-btn') &&
+      content.includes('Header Cart End')
+    ) {
       content = content.replace(
         /(<!-- Header Cart End -->)/,
         `$1${installButton}`
@@ -459,6 +513,7 @@ glob('ekka-html/**/*.html', (err, files) => {
 ```
 
 Exécutez :
+
 ```bash
 npm install glob
 node apply-pwa.js
@@ -492,7 +547,7 @@ await wm.addToWishlist({
   productName: 'Super Product',
   productPrice: '$99.99',
   productImage: 'path/to/image.jpg',
-  productUrl: 'product-page.html'
+  productUrl: 'product-page.html',
 });
 
 // Retirer un produit
@@ -545,15 +600,17 @@ console.log(usage); // {usage, quota, percent}
 ### Le bouton d'installation n'apparaît pas
 
 **Causes possibles :**
+
 1. Pas sur HTTPS (utilisez localhost pour test)
 2. App déjà installée (vérifiez `chrome://apps`)
 3. Manifest invalide (vérifiez DevTools > Application > Manifest)
 4. Service Worker non enregistré (vérifiez console)
 
 **Solution :**
+
 ```javascript
 // Console DevTools
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener('beforeinstallprompt', e => {
   console.log('beforeinstallprompt fired!', e);
 });
 ```
@@ -561,11 +618,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
 ### Service Worker n'enregistre pas
 
 **Vérifiez :**
+
 1. HTTPS ou localhost
 2. Chemin correct vers `sw.js`
 3. Erreurs dans console
 
 **Force update :**
+
 ```javascript
 // Console
 navigator.serviceWorker.getRegistrations().then(regs => {
@@ -577,24 +636,31 @@ location.reload();
 ### Pages ne chargent pas offline
 
 **Vérifiez :**
+
 1. La page a été visitée en ligne d'abord
 2. Service Worker est actif
 3. Cache contient la page
 
 **Console DevTools :**
+
 ```javascript
 caches.keys().then(console.log); // Voir les caches
-caches.open('ekka-pages-v1.0.0').then(cache => cache.keys()).then(console.log);
+caches
+  .open('ekka-pages-v1.0.0')
+  .then(cache => cache.keys())
+  .then(console.log);
 ```
 
 ### Wishlist ne persiste pas
 
 **Vérifiez IndexedDB :**
+
 1. DevTools > Application > IndexedDB > EkkaDB
 2. Vérifiez que la table `wishlist` existe
 3. Vérifiez les permissions navigateur
 
 **Reset database :**
+
 ```javascript
 indexedDB.deleteDatabase('EkkaDB');
 location.reload();
@@ -605,6 +671,7 @@ location.reload();
 Le cache est plein (>50MB).
 
 **Solution :**
+
 ```javascript
 // Vider les caches
 caches.keys().then(keys => {
@@ -625,15 +692,18 @@ caches.keys().then(keys => {
 ### Temps de Chargement
 
 **Première visite (online) :**
+
 - Installation SW : ~2-3 secondes
 - Pré-cache app shell : ~3-5 secondes
 - Page load : normal
 
 **Visites suivantes (online) :**
+
 - Page load : instantané (cache-first pour assets)
 - HTML : frais du réseau (network-first)
 
 **Offline :**
+
 - Pages cachées : instantané
 - Pages non cachées : offline.html immédiat
 
@@ -642,6 +712,7 @@ caches.keys().then(keys => {
 ### Mettre à Jour le Cache
 
 1. Éditez `sw.js` :
+
 ```javascript
 const CACHE_VERSION = 'v1.1.0'; // Incrémenter
 ```
@@ -665,34 +736,38 @@ if ('serviceWorker' in navigator) {
 
 ## Support Navigateur
 
-| Feature | Chrome | Firefox | Safari | Edge |
-|---------|--------|---------|--------|------|
-| Service Worker | ✅ Full | ✅ Full | ⚠️ iOS 11.3+ | ✅ Full |
-| Manifest | ✅ Full | ⚠️ Partial | ⚠️ Partial | ✅ Full |
-| Install Prompt | ✅ Yes | ❌ No | ❌ Manual | ✅ Yes |
-| Push Notifications | ✅ Yes | ✅ Yes | ⚠️ iOS 16.4+ | ✅ Yes |
-| IndexedDB | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
-| Offline | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
+| Feature            | Chrome  | Firefox    | Safari       | Edge    |
+| ------------------ | ------- | ---------- | ------------ | ------- |
+| Service Worker     | ✅ Full | ✅ Full    | ⚠️ iOS 11.3+ | ✅ Full |
+| Manifest           | ✅ Full | ⚠️ Partial | ⚠️ Partial   | ✅ Full |
+| Install Prompt     | ✅ Yes  | ❌ No      | ❌ Manual    | ✅ Yes  |
+| Push Notifications | ✅ Yes  | ✅ Yes     | ⚠️ iOS 16.4+ | ✅ Yes  |
+| IndexedDB          | ✅ Yes  | ✅ Yes     | ✅ Yes       | ✅ Yes  |
+| Offline            | ✅ Yes  | ✅ Yes     | ✅ Yes       | ✅ Yes  |
 
 ## Liens Utiles
 
 **Documentation :**
+
 - [MDN: Progressive Web Apps](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 - [Google Web.dev PWA](https://web.dev/progressive-web-apps/)
 - [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 
 **Outils :**
+
 - [Lighthouse](https://developers.google.com/web/tools/lighthouse)
 - [PWA Builder](https://www.pwabuilder.com/)
 - [Web Manifest Generator](https://app-manifest.firebaseapp.com/)
 
 **Test PWA :**
+
 - [What PWA Can Do Today](https://whatpwacando.today/)
 - [PWA Feature Detector](https://tomayac.github.io/pwa-feature-detector/)
 
 ## Support
 
 Pour toute question ou problème :
+
 1. Vérifiez cette documentation
 2. Consultez la console Chrome DevTools
 3. Testez sur localhost d'abord
